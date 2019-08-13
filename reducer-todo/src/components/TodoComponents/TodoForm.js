@@ -28,7 +28,7 @@ const TodoForm = () => {
   };
 
   return (
-    <div>
+    <div className="todolist">
       <TodoList dispatch={dispatch} todos={state} />
       <form onSubmit={submitChange}>
         <input
