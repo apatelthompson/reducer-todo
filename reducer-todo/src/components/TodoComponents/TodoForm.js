@@ -1,48 +1,52 @@
-import React from "react";
+import React, { useReducer, useState } from "react";
+import { todoReducer, initialState } from "../../reducers/todoReducer";
+import TodoList from "./TodoList";
 
-class TodoForm extends React.Component {
-  // you will need a place to store your state in this component.
-  // design `App` to be the parent component of your application.
-  // this component is going to take care of state, and any change handlers you need to work with your state
+const TodoForm = () => {
+  const [state, dispatch] = useReducer(todoReducer, initialState);
 
-  constructor() {
-    super();
-    this.state = { task: "" };
-  }
+  const [input, setInput] = useState("");
 
-  todoChangeHandler = event => {
-    this.setState({ [event.target.name]: event.target.value });
+  const todoChangeHandler = event => {
+    setInput(event.target.value);
   };
 
-  submitChange = event => {
+  const submitChange = event => {
     event.preventDefault();
-    this.props.addTask(this.state.task);
+    dispatch({
+      type: "ADD_TODO",
+      payload: input
+    });
+    setInput("");
   };
 
-  removeItem = event => {
+  const removeItem = event => {
     event.preventDefault();
-    this.props.clearDone(this.state.task);
+    dispatch({
+      type: "CLEAR_DONE"
+    });
   };
 
-  render() {
-    return (
-      <form onSubmit={this.submitChange}>
+  return (
+    <div>
+      <TodoList dispatch={dispatch} todos={state} />
+      <form onSubmit={submitChange}>
         <input
           type="text"
-          value={this.state.task}
+          value={input}
           name="task"
           placeholder="add task..."
-          onChange={this.todoChangeHandler}
+          onChange={todoChangeHandler}
         />
-        <button className="add-btn" onChange={this.todoChangeHandler}>
+        <button className="add-btn" onClick={submitChange}>
           Add Todo
         </button>
-        <button className="clear-btn" onClick={this.removeItem}>
+        <button className="clear-btn" onClick={removeItem}>
           Clear Completed
         </button>
       </form>
-    );
-  }
-}
+    </div>
+  );
+};
 
 export default TodoForm;

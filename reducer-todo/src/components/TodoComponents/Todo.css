@@ -1,4 +1,4 @@
-div.task-done {
+div.todo-done {
   text-decoration: line-through;
   color: red;
 }
