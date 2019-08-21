@@ -5,7 +5,7 @@ import "./App.css";
 const App = () => {
   return (
     <div className="App">
-      <h2>Learn about Reducers!</h2>
+      <h2>My Todo List</h2>
       <TodoForm />
     </div>
   );
